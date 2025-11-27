@@ -54,7 +54,7 @@ public class HashAccount {
         newItem.displayAccount();
     }
 
-    public void insertAdmin(String nama,String password){
+    public void insert(String nama,String password){
         int newId = 100;
         Account newItem = new Account(id,nama,password);
         int key = newItem.getKey();
