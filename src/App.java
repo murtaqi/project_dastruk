@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+package project_3;
 import java.io.*;
 /**
  *
@@ -11,34 +11,58 @@ import java.io.*;
 public class App {
     public static void main(String[] args) throws IOException{
         int no = 0;
+        String command = "";
         long value;
         String data;
         Account akun = null;
         Transaction transaksi;
         boolean login = false;
         HashAccount ha = new HashAccount(16);
-        ha.insertAdmin("admin", "admin123");
-        ha.insert("taqi","taqi123", 100000);
-        ha.insert("aziz", "123", 50000);
-        while(!login){
+        ha.insert("admin", "admin123");
+        System.out.println("Selamat Datang di Aplikasi Pengelolaan Keuangan Sederhana");
+        System.out.println("Masuk atau daftar");
+        command = getString();
+        if(command.equalsIgnoreCase("masuk")){
+            while(!login){
+                System.out.print("Masukkan nomor akun :");
+                no = getInt();
+                System.out.print("Masukkan Password :");
+                data = getString();
+                akun = ha.find(no);
+                if(akun != null && data.equals(akun.password)){
+                    System.out.println("Selamat Datang "+akun.nama);
+                    login = true;
+                }else{
+                    System.out.println("Nomor Akun atau Password Salah!");
+                }
+            }
+        }else if(command.equalsIgnoreCase("daftar")){
+            System.out.print("Masukkan Nama Pengguna :");
+            String nama = getString();
+            System.out.print("Masukkan Password :");
+            String password = getString();
+            System.out.print("Masukkan Saldo Awal, atau ketik 0 untuk melewati:");
+            long saldo = getLong();
+            ha.insert(nama, password, saldo);
+            System.out.println("Silahkan Login Akun Baru Anda");
             System.out.print("Masukkan nomor akun :");
             no = getInt();
             System.out.print("Masukkan Password :");
             data = getString();
             akun = ha.find(no);
             if(akun != null && data.equals(akun.password)){
-                System.out.println("Selamat Datang "+akun.nama);
-                login = true;
-            }else{
-                System.out.println("Nomor Akun atau Password Salah!");
-            }
+                    System.out.println("Selamat Datang "+akun.nama);
+                    login = true;
+                }else{
+                    System.out.println("Nomor Akun atau Password Salah!");
+                }
         }
         while(login){
             if(akun.id == 100){
                     System.out.println("Anda login sebagai Admin");
                     ha.displayAccountsTable();
                     System.out.println("Ketik 'exit' untuk keluar");
-                    String command = getString();
+                    command = getString();
                     if(command.equalsIgnoreCase("exit")){
                         akun = null;
                         login = false;
