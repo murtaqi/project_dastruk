@@ -44,17 +44,19 @@ public class App {
             long saldo = getLong();
             ha.insert(nama, password, saldo);
             System.out.println("Silahkan Login Akun Baru Anda");
-            System.out.print("Masukkan nomor akun :");
-            no = getInt();
-            System.out.print("Masukkan Password :");
-            data = getString();
-            akun = ha.find(no);
-            if(akun != null && data.equals(akun.password)){
+            while(!login){
+                System.out.print("Masukkan nomor akun :");
+                no = getInt();
+                System.out.print("Masukkan Password :");
+                data = getString();
+                akun = ha.find(no);
+                if(akun != null && data.equals(akun.password)){
                     System.out.println("Selamat Datang "+akun.nama);
                     login = true;
                 }else{
                     System.out.println("Nomor Akun atau Password Salah!");
                 }
+            }
         }
         while(login){
             if(akun.id == 100){
@@ -89,11 +91,38 @@ public class App {
                     akun.saldo += value;
                     break;
                 case 3:
-                    System.out.print("Masukkan Nominal yang Akan Dikeluarkan :");
-                    value = getLong();
-                    System.out.print("Masukkan Kategori Pengeluaran :");
-                    String kategori = getString();
-                    transaksi = new Transaction(value, "Pengeluaran", kategori);
+                    System.out.println("Pilih angka dari Kategori dibawah ini!");
+                    System.out.println("1.Makanan");
+                    System.out.println("2.Belanja");
+                    System.out.println("3.Liburan");
+                    System.out.println("4.Lainnya");
+                    System.out.print("Masukkan Angka :");
+                    int opsi = getInt();
+                    switch(opsi){
+                        case 1:
+                            System.out.print("Masukkan Nominal yang Akan Dikeluarkan :");
+                            value = getLong();
+                            transaksi = new Transaction(value, "Pengeluaran", "Makanan");
+                            break;
+                        case 2:
+                            System.out.print("Masukkan Nominal yang Akan Dikeluarkan :");
+                            value = getLong();
+                            transaksi = new Transaction(value, "Pengeluaran", "Belanja");
+                            break;
+                        case 3:
+                            System.out.print("Masukkan Nominal yang Akan Dikeluarkan :");
+                            value = getLong();
+                            transaksi = new Transaction(value, "Pengeluaran", "Liburan");
+                            break;
+                        case 4:
+                            System.out.print("Masukkan Nominal yang Akan Dikeluarkan :");
+                            value = getLong();
+                            transaksi = new Transaction(value, "Pengeluaran", "Lainnya");
+                            break;
+                        default:
+                            System.out.println("Invalid Entry");
+                            continue;
+                    }
                     if(akun.saldo >= value){
                         akun.addTransaksi(transaksi);
                         akun.saldo -= value;
