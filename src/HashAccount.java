@@ -36,7 +36,7 @@ public class HashAccount {
         System.out.println("No\t| Nomor Akun\t| Nama Pengguna\t| Saldo");
         int counter = 1;
         for(int i = 0; i < size; i++){
-            data[i].displayTableRows(counter);
+            counter = data[i].displayTableRows(counter);
         }
         System.out.println();
     }

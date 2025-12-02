@@ -38,6 +38,9 @@ public class LinkedAccount {
             previous = current;
             current = current.next;
         }
+        if(current == null){
+            return; // key not found
+        }
         if(previous == null){
             first = first.next;
         }else{

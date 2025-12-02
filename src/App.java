@@ -68,7 +68,7 @@ public class App {
                         akun = null;
                         login = false;
                         System.out.println("Terima Kasih");
-                        continue;
+                        break;
                     }
                 }
             System.out.println("Pilih angka dari opsi dibawah ini!");
