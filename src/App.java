@@ -3,12 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.io.*;
+import javax.swing.*;
 /**
  *
  * @author murta
  */
 public class App {
     public static void main(String[] args) throws IOException{
+        // Check if GUI mode is requested
+        if (args.length > 0 && args[0].equalsIgnoreCase("gui")) {
+            runGUI();
+            return;
+        }
+        
+        // Ask user for mode
+        System.out.println("Pilih mode aplikasi:");
+        System.out.println("1. GUI (Graphical User Interface)");
+        System.out.println("2. CLI (Command Line Interface)");
+        System.out.print("Masukkan pilihan (1/2): ");
+        String mode = getString();
+        
+        if (mode.equals("1") || mode.equalsIgnoreCase("gui")) {
+            runGUI();
+            return;
+        }
+        
+        // CLI Mode
+        runCLI();
+    }
+    
+    public static void runGUI() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                HashAccount ha = new HashAccount(16);
+                ha.insert("admin", "admin123", 0);
+                new LoginFrame(ha).setVisible(true);
+            }
+        });
+    }
+    
+    public static void runCLI() throws IOException {
         int no = 0;
         String command = "";
         long value;

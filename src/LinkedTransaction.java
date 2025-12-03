@@ -4,6 +4,7 @@
  */
 
 import java.time.LocalDate;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -56,5 +57,26 @@ public class LinkedTransaction {
             current = current.next;
         }
         System.out.println();
+    }
+
+    public void loadToTable(DefaultTableModel model){
+        Transaction current = first;
+        int no = 1;
+        if(current == null){
+            return;
+        }
+        while(current != null){
+            Object[] row = {
+                no,
+                current.nomor,
+                current.type,
+                "Rp " + String.format("%,d", current.nominal),
+                current.category != null ? current.category : "-",
+                current.date.toString()
+            };
+            model.addRow(row);
+            no++;
+            current = current.next;
+        }
     }
 }

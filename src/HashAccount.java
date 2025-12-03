@@ -54,6 +54,16 @@ public class HashAccount {
         newItem.displayAccount();
     }
 
+    public int insertAndGetId(String nama, String password, long saldo){
+        int newId = ++id;
+        Account newItem = new Account(newId, nama, password, saldo);
+        int key = newItem.getKey();
+        int hashVal = hashFunc1(key);
+        data[hashVal].insert(newItem);
+        newItem.displayAccount();
+        return newId;
+    }
+
     public void insert(String nama,String password){
         int newId = 100;
         Account newItem = new Account(id,nama,password);
