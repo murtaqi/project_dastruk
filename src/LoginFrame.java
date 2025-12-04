@@ -27,12 +27,13 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSignUp = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        btnKeluar = new javax.swing.JButton();
 
         jLabel1.setText("Login ");
 
         jUsername.setText("Username");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Manajemen Keuangan - Login");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -74,6 +75,15 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
+        btnKeluar.setBackground(new java.awt.Color(155, 0, 0));
+        btnKeluar.setForeground(new java.awt.Color(255, 255, 255));
+        btnKeluar.setText("Keluar");
+        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKeluarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,7 +99,9 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSignUp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLogin)))
+                        .addComponent(btnLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnKeluar)))
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(117, 117, 117)
@@ -112,7 +124,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSignUp)
-                    .addComponent(btnLogin))
+                    .addComponent(btnLogin)
+                    .addComponent(btnKeluar))
                 .addGap(41, 41, 41))
         );
 
@@ -172,6 +185,10 @@ public class LoginFrame extends javax.swing.JFrame {
         this.dispose();
     }
 
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose();
+    }
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -204,4 +221,5 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jNoAkun;
     private javax.swing.JTextField jUsername;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnKeluar;
 }
