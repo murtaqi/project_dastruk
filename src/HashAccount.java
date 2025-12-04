@@ -53,15 +53,6 @@ public class HashAccount {
         data[hashVal].insert(newItem);
         newItem.displayAccount();
     }
-
-    public void insert(String nama,String password){
-        int newId = 100;
-        Account newItem = new Account(id,nama,password);
-        int key = newItem.getKey();
-        int hashVal = hashFunc1(key);
-        data[hashVal].insert(newItem);
-        newItem.displayAccount();
-    }
     
     public void delete(int key){
         int hashVal = hashFunc1((int) key);

@@ -17,7 +17,6 @@ public class App {
         Transaction transaksi;
         boolean login = false;
         HashAccount ha = new HashAccount(16);
-        ha.insert("admin", "admin123");
         System.out.println("Selamat Datang di Aplikasi Pengelolaan Keuangan Sederhana");
         System.out.println("Masuk atau daftar");
         command = getString();
@@ -135,6 +134,7 @@ public class App {
                     System.out.println("1.Semua Riwayat");
                     System.out.println("2.Bulan Ini");
                     System.out.println("3.Bulan Lalu");
+                    System.out.println("4.Cari ID Transaksi");
                     System.out.print("Masukkan Angka :");
                     int pilih = getInt();
                     switch(pilih){
