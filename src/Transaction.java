@@ -6,7 +6,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
+import java.time.YearMonth;
 /**
  *
  * @author murta
@@ -24,9 +24,7 @@ public class Transaction {
         this.now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String timestamp = now.format(format);
-        Random random = new Random();
-        String norandom = String.valueOf(random.nextInt(900)+100);
-        this.nomor = timestamp + norandom;
+        this.nomor = timestamp;
         this.type = type;
         this.nominal = nominal;
         this.date = LocalDate.now();
@@ -36,13 +34,15 @@ public class Transaction {
         this.now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String timestamp = now.format(format);
-        Random random = new Random();
-        String norandom = String.valueOf(random.nextInt(900)+100);
-        this.nomor = timestamp + norandom;
+        this.nomor = timestamp;
         this.type = type;
         this.nominal = nominal;
         this.date = LocalDate.now();
         this.category = category;
+    }
+
+    public LocalDate getTimesTamp(){
+        return date;
     }
     
     public void displayLink(){

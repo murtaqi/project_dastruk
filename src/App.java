@@ -131,7 +131,37 @@ public class App {
                     }
                     break;
                 case 4:
-                    akun.displayRiwayat();
+                    System.out.println("Pilih angka dari Kategori dibawah ini!");
+                    System.out.println("1.Semua Riwayat");
+                    System.out.println("2.Bulan Ini");
+                    System.out.println("3.Bulan Lalu");
+                    System.out.print("Masukkan Angka :");
+                    int pilih = getInt();
+                    switch(pilih){
+                        case 1:
+                            akun.displayRiwayat();
+                            break;
+                        case 2:
+                            akun.displayRiwayatBulanIni();
+                            break;
+                        case 3:
+                            akun.displayRiwayatBulanLalu();
+                            break;
+                        case 4:
+                            System.out.print("Masukkan ID Transaksi :");
+                            String idTrans = getString();
+                            Transaction trans = akun.transaction.find(idTrans);
+                            if (trans != null) {
+                                System.out.println("Transaksi ditemukan:");
+                                System.out.println(trans); // override toString() di Transaction untuk detail
+                            } else {
+                                System.out.println("Transaksi tidak ditemukan.");
+                            }
+                            break;
+                    default:
+                            System.out.println("Invalid Entry");
+                            continue;
+                    }
                     break;
                 case 5:
                     akun = null;

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import java.util.Random;
+import java.time.LocalDate;
 /**
  *
  * @author murta
@@ -52,5 +52,39 @@ public class Account {
         System.out.println("\t---Riwayat Transaksi---");
         transaction.displayList();
         System.out.println("\t-----------------------");
+    }
+
+    public void displayRiwayatBulanIni(){
+        System.out.println("\t---Riwayat Transaksi Bulan Ini---");
+        LocalDate now = LocalDate.now();
+        Transaction current = transaction.find(now);
+        if(current == null){
+            System.out.println("\tBelum Ada Transaksi Bulan Ini");
+            return;
+        }
+        while(current != null){
+            if(current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()){
+                current.displayLink();
+            }
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public void displayRiwayatBulanLalu(){
+        System.out.println("\t---Riwayat Transaksi Bulan Lalu---");
+        LocalDate now = LocalDate.now().minusMonths(1);
+        Transaction current = transaction.find(now);
+        if(current == null){
+            System.out.println("\tBelum Ada Transaksi Bulan Lalu");
+            return;
+        }
+        while(current != null){
+            if(current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()){
+                current.displayLink();
+            }
+            current = current.next;
+        }
+        System.out.println();
     }
 }
