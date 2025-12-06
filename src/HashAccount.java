@@ -30,16 +30,6 @@ public class HashAccount {
             System.out.println();
         }
     }
-
-    public void displayAccountsTable(){
-        System.out.println("Daftar Akun Pengguna:");
-        System.out.println("No\t| Nomor Akun\t| Nama Pengguna\t| Saldo");
-        int counter = 1;
-        for(int i = 0; i < size; i++){
-            counter = data[i].displayTableRows(counter);
-        }
-        System.out.println();
-    }
     
     public int hashFunc1(int key){
         return key % size;

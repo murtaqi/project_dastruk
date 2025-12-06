@@ -18,7 +18,7 @@ public class App {
         boolean login = false;
         HashAccount ha = new HashAccount(16);
         System.out.println("Selamat Datang di Aplikasi Pengelolaan Keuangan Sederhana");
-        System.out.println("Masuk atau daftar");
+        System.out.print("Masuk atau daftar :");
         command = getString();
         if(command.equalsIgnoreCase("masuk")){
             while(!login){
@@ -58,18 +58,6 @@ public class App {
             }
         }
         while(login){
-            if(akun.id == 100){
-                    System.out.println("Anda login sebagai Admin");
-                    ha.displayAccountsTable();
-                    System.out.println("Ketik 'exit' untuk keluar");
-                    command = getString();
-                    if(command.equalsIgnoreCase("exit")){
-                        akun = null;
-                        login = false;
-                        System.out.println("Terima Kasih");
-                        break;
-                    }
-                }
             System.out.println("Pilih angka dari opsi dibawah ini!");
             System.out.println("1.Informasi Akun");
             System.out.println("2.Pemasukan");
@@ -153,7 +141,7 @@ public class App {
                             Transaction trans = akun.transaction.find(idTrans);
                             if (trans != null) {
                                 System.out.println("Transaksi ditemukan:");
-                                System.out.println(trans); // override toString() di Transaction untuk detail
+                                trans.displayLink();
                             } else {
                                 System.out.println("Transaksi tidak ditemukan.");
                             }

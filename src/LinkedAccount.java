@@ -68,23 +68,4 @@ public class LinkedAccount {
         }
         System.out.println();
     }
-
-    public int displayTableRows(int startNo){
-        Account current = first;
-        int no = startNo;
-        while(current != null){
-            if(current.id == 100){
-                current = current.next;
-                continue;
-            }
-            System.out.print(no+"\t|");
-            System.out.print("\t"+current.id+"\t|");
-            System.out.print("\t"+current.nama+"\t|");
-            System.out.print(current.saldo);
-            System.out.println();
-            no++;
-            current = current.next;
-        }
-        return no;
-    }
 }
