@@ -1,23 +1,20 @@
 package gui;
 
 import model.*;
+import gui.utils.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /**
  * Main Dashboard GUI
- * Modern design with purple theme for main menu
+ * Modern design with purple theme, gradient background, and card-based layout
  */
 public class MainGUI extends JFrame {
     private Account account;
     private HashAccount hashAccount;
     private JLabel jSaldoLabel;
-    private JButton jPendapatan;
-    private JButton jPengeluaran;
-    private JButton jInformasi;
-    private JButton jRiwayat;
-    private JButton jLogout;
+    private RoundedButton jLogout;
     private JCheckBox jShowBalance;
 
     public MainGUI(Account account, HashAccount ha) {
@@ -28,127 +25,160 @@ public class MainGUI extends JFrame {
     }
 
     private void initComponents() {
-        // Header Panel (Purple)
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(65, 0, 155));
-        headerPanel.setPreferredSize(new Dimension(500, 150));
-        headerPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbcHeader = new GridBagConstraints();
-        gbcHeader.insets = new Insets(10, 20, 10, 20);
+        // Background Panel with Gradient
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                GradientPaint gradient = new GradientPaint(0, 0, new Color(65, 0, 155),
+                        0, getHeight(), new Color(41, 0, 98));
+                g2.setPaint(gradient);
+                g2.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        backgroundPanel.setLayout(new BorderLayout());
 
-        // Welcome Label
-        gbcHeader.gridwidth = GridBagConstraints.REMAINDER;
-        gbcHeader.gridy = 0;
-        gbcHeader.anchor = GridBagConstraints.WEST;
-        JLabel welcomeLabel = new JLabel("Selamat Datang, " + account.nama);
-        welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        welcomeLabel.setForeground(new Color(255, 255, 255));
-        headerPanel.add(welcomeLabel, gbcHeader);
+        // Scroll pane for main content
+        JScrollPane scrollPane = new JScrollPane(createMainContent());
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
+        backgroundPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Balance Label
-        gbcHeader.gridy = 1;
-        JLabel balanceTextLabel = new JLabel("Sisa Saldo");
-        balanceTextLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        balanceTextLabel.setForeground(new Color(255, 255, 255));
-        headerPanel.add(balanceTextLabel, gbcHeader);
-
-        // Balance Value
-        gbcHeader.gridy = 2;
-        jSaldoLabel = new JLabel("Rp " + String.format("%,d", account.saldo));
-        jSaldoLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        jSaldoLabel.setForeground(new Color(255, 255, 255));
-        headerPanel.add(jSaldoLabel, gbcHeader);
-
-        // Show/Hide Balance Checkbox
-        gbcHeader.gridy = 3;
-        jShowBalance = new JCheckBox("Tampilkan saldo");
-        jShowBalance.setSelected(true);
-        jShowBalance.setForeground(new Color(255, 255, 255));
-        jShowBalance.setBackground(new Color(65, 0, 155));
-        jShowBalance.addActionListener(e -> toggleBalance());
-        headerPanel.add(jShowBalance, gbcHeader);
-
-        // Main Content Panel
-        JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(new Color(255, 255, 255));
-        contentPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbcContent = new GridBagConstraints();
-        gbcContent.fill = GridBagConstraints.HORIZONTAL;
-        gbcContent.insets = new Insets(15, 20, 15, 20);
-        gbcContent.weightx = 1.0;
-
-        // Menu Title
-        gbcContent.gridwidth = GridBagConstraints.REMAINDER;
-        gbcContent.gridy = 0;
-        gbcContent.anchor = GridBagConstraints.CENTER;
-        JLabel menuLabel = new JLabel("Menu Utama");
-        menuLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        menuLabel.setForeground(new Color(65, 0, 155));
-        contentPanel.add(menuLabel, gbcContent);
-
-        // Buttons Panel
-        gbcContent.gridy = 1;
-        gbcContent.insets = new Insets(20, 20, 20, 20);
-        JPanel buttonPanelTop = new JPanel();
-        buttonPanelTop.setBackground(new Color(255, 255, 255));
-        buttonPanelTop.setLayout(new GridLayout(1, 2, 15, 0));
-
-        jPendapatan = createButton("Pendapatan", new Color(65, 0, 155));
-        jPendapatan.addActionListener(e -> openPendapatan());
-        buttonPanelTop.add(jPendapatan);
-
-        jPengeluaran = createButton("Pengeluaran", new Color(65, 0, 155));
-        jPengeluaran.addActionListener(e -> openPengeluaran());
-        buttonPanelTop.add(jPengeluaran);
-
-        contentPanel.add(buttonPanelTop, gbcContent);
-
-        // Second Row Buttons
-        gbcContent.gridy = 2;
-        JPanel buttonPanelMiddle = new JPanel();
-        buttonPanelMiddle.setBackground(new Color(255, 255, 255));
-        buttonPanelMiddle.setLayout(new GridLayout(1, 2, 15, 0));
-
-        jRiwayat = createButton("Riwayat Transaksi", new Color(65, 0, 155));
-        jRiwayat.addActionListener(e -> openRiwayat());
-        buttonPanelMiddle.add(jRiwayat);
-
-        jInformasi = createButton("Informasi Akun", new Color(65, 0, 155));
-        jInformasi.addActionListener(e -> showAccountInfo());
-        buttonPanelMiddle.add(jInformasi);
-
-        contentPanel.add(buttonPanelMiddle, gbcContent);
-
-        // Logout Button
-        gbcContent.gridy = 3;
-        gbcContent.insets = new Insets(20, 20, 15, 20);
-        jLogout = createButton("Logout", new Color(220, 20, 60));
-        jLogout.addActionListener(e -> logout());
-        contentPanel.add(jLogout, gbcContent);
-
-        // Main Frame Layout
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(headerPanel, BorderLayout.NORTH);
-        mainPanel.add(new JScrollPane(contentPanel), BorderLayout.CENTER);
-
-        setContentPane(mainPanel);
+        setContentPane(backgroundPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Aplikasi Pengelolaan Keuangan - Dashboard");
-        setSize(500, 600);
+        setSize(600, 750);
         setResizable(false);
     }
 
-    private JButton createButton(String text, Color bgColor) {
-        JButton btn = new JButton(text);
-        btn.setBackground(bgColor);
-        btn.setForeground(new Color(255, 255, 255));
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.setPreferredSize(new Dimension(150, 50));
-        btn.setBorder(null);
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btn.setFocusPainted(false);
-        return btn;
+    private JPanel createMainContent() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setOpaque(false);
+        mainPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(20, 25, 10, 25);
+        gbc.weightx = 1.0;
+
+        // Welcome Card
+        gbc.gridy = 0;
+        mainPanel.add(createWelcomeCard(), gbc);
+
+        // Balance Card
+        gbc.gridy = 1;
+        mainPanel.add(createBalanceCard(), gbc);
+
+        // Menu Buttons - Row 1
+        gbc.gridy = 2;
+        gbc.insets = new Insets(15, 25, 5, 25);
+        mainPanel.add(createButtonRow(
+                new String[]{"Pendapatan", "Pengeluaran"},
+                new String[]{"Tambah pendapatan", "Catat pengeluaran"}
+        ), gbc);
+
+        // Menu Buttons - Row 2
+        gbc.gridy = 3;
+        mainPanel.add(createButtonRow(
+                new String[]{"Riwayat", "Informasi"},
+                new String[]{"Lihat transaksi", "Kelola akun"}
+        ), gbc);
+
+        // Logout Button
+        gbc.gridy = 4;
+        gbc.insets = new Insets(20, 25, 20, 25);
+        jLogout = new RoundedButton("Logout", new Color(220, 20, 60), new Color(200, 10, 50));
+        jLogout.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jLogout.setPreferredSize(new Dimension(150, 45));
+        jLogout.addActionListener(e -> logout());
+        mainPanel.add(jLogout, gbc);
+
+        return mainPanel;
+    }
+
+    private ModernPanel createWelcomeCard() {
+        ModernPanel card = new ModernPanel(new Color(255, 255, 255), 15);
+        card.setPreferredSize(new Dimension(500, 80));
+        card.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 15, 10, 15);
+
+        JLabel welcomeLabel = new JLabel("Selamat Datang, " + account.nama + "!");
+        welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        welcomeLabel.setForeground(new Color(65, 0, 155));
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.WEST;
+        card.add(welcomeLabel, gbc);
+
+        return card;
+    }
+
+    private ModernPanel createBalanceCard() {
+        ModernPanel card = new ModernPanel(new Color(255, 255, 255), 15);
+        card.setPreferredSize(new Dimension(500, 140));
+        card.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 15, 5, 15);
+
+        // Title
+        JLabel titleLabel = new JLabel("Saldo Anda");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        titleLabel.setForeground(new Color(150, 150, 150));
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        card.add(titleLabel, gbc);
+
+        // Balance Value
+        jSaldoLabel = new JLabel("Rp " + String.format("%,d", account.saldo));
+        jSaldoLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        jSaldoLabel.setForeground(new Color(65, 0, 155));
+        gbc.gridy = 1;
+        gbc.insets = new Insets(10, 15, 10, 15);
+        card.add(jSaldoLabel, gbc);
+
+        // Checkbox
+        jShowBalance = new JCheckBox("Tampilkan saldo");
+        jShowBalance.setSelected(true);
+        jShowBalance.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        jShowBalance.setForeground(new Color(100, 100, 100));
+        jShowBalance.setOpaque(false);
+        jShowBalance.addActionListener(e -> toggleBalance());
+        gbc.gridy = 2;
+        gbc.insets = new Insets(5, 15, 5, 15);
+        card.add(jShowBalance, gbc);
+
+        return card;
+    }
+
+    private JPanel createButtonRow(String[] labels, String[] tooltips) {
+        JPanel rowPanel = new JPanel();
+        rowPanel.setOpaque(false);
+        rowPanel.setLayout(new GridLayout(1, 2, 15, 0));
+
+        for (int i = 0; i < labels.length; i++) {
+            RoundedButton btn = new RoundedButton(labels[i], new Color(65, 0, 155), new Color(80, 10, 180));
+            btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            btn.setPreferredSize(new Dimension(140, 50));
+            btn.setToolTipText(tooltips[i]);
+
+            String label = labels[i];
+            btn.addActionListener(e -> handleButtonClick(label));
+            rowPanel.add(btn);
+        }
+
+        return rowPanel;
+    }
+
+    private void handleButtonClick(String buttonLabel) {
+        switch (buttonLabel) {
+            case "Pendapatan" -> openPendapatan();
+            case "Pengeluaran" -> openPengeluaran();
+            case "Riwayat" -> openRiwayat();
+            case "Informasi" -> showAccountInfo();
+        }
     }
 
     private void toggleBalance() {
@@ -218,7 +248,7 @@ public class MainGUI extends JFrame {
             }
         };
 
-        // Iterate through transactions using reflection or direct access
+        // Iterate through transactions using reflection to access private first field
         try {
             java.lang.reflect.Field firstField = account.transaction.getClass().getDeclaredField("first");
             firstField.setAccessible(true);

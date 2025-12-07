@@ -32,13 +32,14 @@ public class HashAccount {
         return key % size;
     }
     
-    public void insert(String nama, String password, long saldo) {
+    public Account insert(String nama, String password, long saldo) {
         ++id;
         Account newItem = new Account(id, nama, password, saldo);
         int key = newItem.getKey();
         int hashVal = hashFunc1(key);
         data[hashVal].insert(newItem);
         newItem.displayAccount();
+        return newItem;
     }
     
     public void delete(int key) {
