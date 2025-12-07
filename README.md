@@ -1,18 +1,66 @@
-## Getting Started
+# Aplikasi Pengelolaan Keuangan Sederhana
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Aplikasi Java untuk mengelola akun dan transaksi keuangan dengan fitur save/load data.
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+- `src/`: Source code Java
+  - `App.java` - Main application
+  - `Account.java` - Class untuk data akun
+  - `Transaction.java` - Class untuk data transaksi
+  - `HashAccount.java` - Hash table untuk menyimpan akun
+  - `LinkedAccount.java` - Linked list untuk akun
+  - `LinkedTransaction.java` - Linked list untuk transaksi
+  - `DataStorage.java` - Class untuk save/load data ke txt
+  
+- `bin/`: Compiled `.class` files (generated automatically)
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `akun_data.txt`: File penyimpanan data akun dan transaksi (auto-generated saat program berjalan)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Cara Menggunakan
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### 1. Compile Project
+```bash
+./compile.sh
+# atau
+javac -d bin src/*.java
+```
 
-## Dependency Management
+### 2. Menjalankan Aplikasi
+```bash
+./run.sh
+# atau
+java -cp bin App
+```
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### 3. Fitur Utama
+- **Daftar**: Membuat akun baru dengan nama, password, dan saldo awal
+- **Masuk**: Login dengan nomor akun dan password
+- **Informasi Akun**: Melihat detail akun dan saldo
+- **Pemasukan**: Menambah saldo
+- **Pengeluaran**: Mengurangi saldo dengan kategori (Makanan, Belanja, Liburan, Lainnya)
+- **Riwayat Transaksi**: Melihat semua transaksi atau filter berdasarkan periode
+
+### 4. Fitur Save/Load
+- Semua data akun dan transaksi otomatis disimpan ke `akun_data.txt` saat program exit
+- Saat program dijalankan kembali, data akan otomatis di-load
+- Format file: Text dengan separator `|` untuk kemudahan backup manual
+
+## Struktur File Data
+
+File `akun_data.txt` berisi:
+```
+========== DATA AKUN ==========
+ACCOUNT:id|nama|password|saldo
+TRANS:accountId|transId|tipe|nominal|tanggal|kategori
+==============================
+```
+
+Contoh:
+```
+========== DATA AKUN ==========
+ACCOUNT:101|Test User|password123|125
+TRANS:101|20251207145548935|Pemasukan|50|2025-12-07|
+TRANS:101|20251207145548935|Pengeluaran|25|2025-12-07|Makanan
+==============================
+```
