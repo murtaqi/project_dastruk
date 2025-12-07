@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package model;
 
 import java.time.LocalDate;
+
 /**
- *
- * @author murta
+ * Class untuk merepresentasikan satu akun pengguna
  */
 public class Account {
     public int id;
@@ -16,7 +13,7 @@ public class Account {
     public Account next;
     public LinkedTransaction transaction;
     
-    public Account(int id,String nama,String password,long saldo){
+    public Account(int id, String nama, String password, long saldo) {
         this.id = id;
         this.nama = nama;
         this.password = password;
@@ -24,46 +21,46 @@ public class Account {
         transaction = new LinkedTransaction();
     }
     
-    public Account(int id,String nama,String password){
+    public Account(int id, String nama, String password) {
         this.id = id;
         this.nama = nama;
         this.password = password;
     }
     
-    public int getKey(){
+    public int getKey() {
         return id;
     }
     
-    public void displayLink(){
-        System.out.print(id+", ");
+    public void displayLink() {
+        System.out.print(id + ", ");
     }
     
-    public void displayAccount(){
-        System.out.print("\tId : "+id);
-        System.out.print(", Nama : "+nama);
-        System.out.println(", Saldo : "+saldo);
+    public void displayAccount() {
+        System.out.print("\tId : " + id);
+        System.out.print(", Nama : " + nama);
+        System.out.println(", Saldo : " + saldo);
     }
     
-    public void addTransaksi(Transaction newTrans){
+    public void addTransaksi(Transaction newTrans) {
         transaction.insert(newTrans);
     }
     
-    public void displayRiwayat(){
+    public void displayRiwayat() {
         System.out.println("\t---Riwayat Transaksi---");
         transaction.displayList();
         System.out.println("\t-----------------------");
     }
 
-    public void displayRiwayatBulanIni(){
+    public void displayRiwayatBulanIni() {
         System.out.println("\t---Riwayat Transaksi Bulan Ini---");
         LocalDate now = LocalDate.now();
         Transaction current = transaction.find(now);
-        if(current == null){
+        if (current == null) {
             System.out.println("\tBelum Ada Transaksi Bulan Ini");
             return;
         }
-        while(current != null){
-            if(current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()){
+        while (current != null) {
+            if (current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()) {
                 current.displayLink();
             }
             current = current.next;
@@ -71,16 +68,16 @@ public class Account {
         System.out.println();
     }
 
-    public void displayRiwayatBulanLalu(){
+    public void displayRiwayatBulanLalu() {
         System.out.println("\t---Riwayat Transaksi Bulan Lalu---");
         LocalDate now = LocalDate.now().minusMonths(1);
         Transaction current = transaction.find(now);
-        if(current == null){
+        if (current == null) {
             System.out.println("\tBelum Ada Transaksi Bulan Lalu");
             return;
         }
-        while(current != null){
-            if(current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()){
+        while (current != null) {
+            if (current.date.getMonth() == now.getMonth() && current.date.getYear() == now.getYear()) {
                 current.displayLink();
             }
             current = current.next;

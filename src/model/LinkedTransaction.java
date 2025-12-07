@@ -1,67 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package model;
 
 import java.time.LocalDate;
 import java.io.PrintWriter;
 
 /**
- *
- * @author murta
+ * Class untuk linked list transaksi
  */
 public class LinkedTransaction {
     private Transaction first;
     
-    public LinkedTransaction(){
+    public LinkedTransaction() {
         first = null;
     }
     
-    public void insert(Transaction newTrans){
+    public void insert(Transaction newTrans) {
         newTrans.next = first;
         first = newTrans;
     }
     
-    public Transaction find(String key){
+    public Transaction find(String key) {
         Transaction current = first;
-        while(current != null){
-            if(current.nomor.equals(key)){
+        while (current != null) {
+            if (current.nomor.equals(key)) {
                 return current;
-            }else{
+            } else {
                 current = current.next;
             }
         }
         return null;
     }
     
-    public Transaction find(LocalDate key){
+    public Transaction find(LocalDate key) {
         Transaction current = first;
-        while(current != null){
-            if(current.date.equals(key)){
+        while (current != null) {
+            if (current.date.equals(key)) {
                 return current;
-            }else{
+            } else {
                 current = current.next;
             }
         }
         return null;
     }
     
-    public void displayList(){
+    public void displayList() {
         Transaction current = first;
-        if(current == null){
+        if (current == null) {
             System.out.println("Belum Ada Transaksi");
             return;
         }
-        while(current != null){
+        while (current != null) {
             current.displayLink();
             current = current.next;
         }
         System.out.println();
     }
     
-    public void saveToFile(PrintWriter writer, int accountId){
+    public void saveToFile(PrintWriter writer, int accountId) {
         Transaction current = first;
-        while(current != null){
+        while (current != null) {
             String category = (current.category != null) ? current.category : "";
             writer.println("TRANS:" + accountId + "|" + current.nomor + "|" + current.type + "|" + current.nominal + "|" + current.date + "|" + category);
             current = current.next;

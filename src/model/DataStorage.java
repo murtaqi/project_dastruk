@@ -1,7 +1,7 @@
+package model;
+
 import java.io.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Class untuk menangani penyimpanan dan pemuatan data akun ke file txt

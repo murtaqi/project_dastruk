@@ -1,15 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.YearMonth;
+
 /**
- *
- * @author murta
+ * Class untuk merepresentasikan satu transaksi
  */
 public class Transaction {
     public String nomor;
@@ -20,7 +16,7 @@ public class Transaction {
     public Transaction next;
     public String category;
     
-    public Transaction(long nominal,String type){
+    public Transaction(long nominal, String type) {
         this.now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String timestamp = now.format(format);
@@ -30,7 +26,7 @@ public class Transaction {
         this.date = LocalDate.now();
     }
 
-    public Transaction(long nominal,String type, String category){
+    public Transaction(long nominal, String type, String category) {
         this.now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String timestamp = now.format(format);
@@ -41,17 +37,17 @@ public class Transaction {
         this.category = category;
     }
 
-    public LocalDate getTimesTamp(){
+    public LocalDate getTimesTamp() {
         return date;
     }
     
-    public void displayLink(){
-        System.out.print("\tID Transaksi : "+nomor);
-        System.out.print(", Type : "+type);
-        System.out.print(", Nominal : "+nominal);
-        if(type.equalsIgnoreCase("Pengeluaran")){
-            System.out.print(", Kategori : "+category);
+    public void displayLink() {
+        System.out.print("\tID Transaksi : " + nomor);
+        System.out.print(", Type : " + type);
+        System.out.print(", Nominal : " + nominal);
+        if (type.equalsIgnoreCase("Pengeluaran")) {
+            System.out.print(", Kategori : " + category);
         }
-        System.out.println(", Tanggal : "+date);
+        System.out.println(", Tanggal : " + date);
     }
 }

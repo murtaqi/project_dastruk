@@ -1,58 +1,54 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package model;
 
 import java.io.PrintWriter;
 
 /**
- *
- * @author murta
+ * Class untuk linked list akun
  */
 public class LinkedAccount {
     private Account first;
     
-    public LinkedAccount(){
+    public LinkedAccount() {
         first = null;
     }
     
-    public void insert(Account theLink){
+    public void insert(Account theLink) {
         int key = theLink.getKey();
         Account current = first;
         Account previous = null;
-        while(current != null && key > current.getKey()){
+        while (current != null && key > current.getKey()) {
             previous = current;
             current = current.next;
         }
-        if(previous == null){
+        if (previous == null) {
             first = theLink;
-        }else{
+        } else {
             previous.next = theLink;
         }
         theLink.next = current;
     }
     
-    public void delete(int key){
+    public void delete(int key) {
         Account previous = null;
         Account current = first;
-        while(current != null && key != current.getKey()){
+        while (current != null && key != current.getKey()) {
             previous = current;
             current = current.next;
         }
-        if(current == null){
+        if (current == null) {
             return; // key not found
         }
-        if(previous == null){
+        if (previous == null) {
             first = first.next;
-        }else{
+        } else {
             previous.next = current.next;
         }
     }
     
-    public Account find(int key){
+    public Account find(int key) {
         Account current = first;
-        while(current != null && current.getKey() <= key){
-            if(current.getKey() == key){
+        while (current != null && current.getKey() <= key) {
+            if (current.getKey() == key) {
                 return current;
             }
             current = current.next;
@@ -60,9 +56,9 @@ public class LinkedAccount {
         return null;
     }
     
-    public void displayList(){
+    public void displayList() {
         Account current = first;
-        while(current != null){
+        while (current != null) {
             System.out.print("\t| ");
             current.displayLink();
             current = current.next;
@@ -70,17 +66,17 @@ public class LinkedAccount {
         System.out.println();
     }
     
-    public Account getFirst(){
+    public Account getFirst() {
         return first;
     }
     
-    public void saveToFile(PrintWriter writer){
+    public void saveToFile(PrintWriter writer) {
         Account current = first;
-        while(current != null){
+        while (current != null) {
             writer.println("ACCOUNT:" + current.id + "|" + current.nama + "|" + current.password + "|" + current.saldo);
             
             // Simpan transaksi untuk akun ini
-            if(current.transaction != null){
+            if (current.transaction != null) {
                 current.transaction.saveToFile(writer, current.id);
             }
             
