@@ -4,6 +4,7 @@
  */
 
 import java.time.LocalDate;
+import java.io.PrintWriter;
 
 /**
  *
@@ -56,5 +57,14 @@ public class LinkedTransaction {
             current = current.next;
         }
         System.out.println();
+    }
+    
+    public void saveToFile(PrintWriter writer, int accountId){
+        Transaction current = first;
+        while(current != null){
+            String category = (current.category != null) ? current.category : "";
+            writer.println("TRANS:" + accountId + "|" + current.nomor + "|" + current.type + "|" + current.nominal + "|" + current.date + "|" + category);
+            current = current.next;
+        }
     }
 }

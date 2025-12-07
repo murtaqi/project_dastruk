@@ -8,6 +8,8 @@ import java.io.*;
  * @author murta
  */
 public class App {
+    private static BufferedReader br = null;
+    
     public static void main(String[] args) throws IOException{
         int no = 0;
         String command = "";
@@ -17,6 +19,10 @@ public class App {
         Transaction transaksi;
         boolean login = false;
         HashAccount ha = new HashAccount(16);
+        
+        // Load data dari file
+        DataStorage.loadAllAccounts(ha);
+        
         System.out.println("Selamat Datang di Aplikasi Pengelolaan Keuangan Sederhana");
         System.out.print("Masuk atau daftar :");
         command = getString();
@@ -154,6 +160,8 @@ public class App {
                 case 5:
                     akun = null;
                     login = false;
+                    // Simpan data sebelum exit
+                    DataStorage.saveAllAccounts(ha);
                     System.out.println("Terima Kasih");
                     break;
                 default:
@@ -163,8 +171,10 @@ public class App {
     }
     
     public static String getString() throws IOException{
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
+        if(br == null){
+            InputStreamReader isr = new InputStreamReader(System.in);
+            br = new BufferedReader(isr);
+        }
         String s = br.readLine();
         return s;
     }

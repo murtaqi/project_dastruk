@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.PrintWriter;
 
 /**
  *
@@ -36,7 +37,7 @@ public class HashAccount {
     }
     
     public void insert(String nama,String password,long saldo){
-        int newId = ++id;
+        ++id;
         Account newItem = new Account(id,nama,password, saldo);
         int key = newItem.getKey();
         int hashVal = hashFunc1(key);
@@ -53,5 +54,50 @@ public class HashAccount {
         int hashVal = hashFunc1((int) key);
         Account theLink = data[hashVal].find(key);
         return theLink;
+    }
+    
+    public void insertWithId(int id, String nama, String password, long saldo){
+        Account newItem = new Account(id, nama, password, saldo);
+        int key = newItem.getKey();
+        int hashVal = hashFunc1(key);
+        data[hashVal].insert(newItem);
+        if(id > this.id){
+            this.id = id;
+        }
+    }
+    
+    public void saveToFile(PrintWriter writer){
+        writer.println("========== DATA AKUN ==========");
+        for(int j = 0; j < size; j++){
+            data[j].saveToFile(writer);
+        }
+        writer.println("==============================");
+    }
+    
+    public Account getFirstAccount(){
+        for(int j = 0; j < size; j++){
+            Account acc = data[j].getFirst();
+            if(acc != null){
+                return acc;
+            }
+        }
+        return null;
+    }
+    
+    public Account getNextAccount(Account current){
+        if(current == null) return null;
+        
+        if(current.next != null){
+            return current.next;
+        }
+        
+        int hashVal = hashFunc1(current.getKey());
+        for(int j = hashVal + 1; j < size; j++){
+            Account acc = data[j].getFirst();
+            if(acc != null){
+                return acc;
+            }
+        }
+        return null;
     }
 }

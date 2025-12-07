@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.PrintWriter;
 
 /**
  *
@@ -67,5 +68,23 @@ public class LinkedAccount {
             current = current.next;
         }
         System.out.println();
+    }
+    
+    public Account getFirst(){
+        return first;
+    }
+    
+    public void saveToFile(PrintWriter writer){
+        Account current = first;
+        while(current != null){
+            writer.println("ACCOUNT:" + current.id + "|" + current.nama + "|" + current.password + "|" + current.saldo);
+            
+            // Simpan transaksi untuk akun ini
+            if(current.transaction != null){
+                current.transaction.saveToFile(writer, current.id);
+            }
+            
+            current = current.next;
+        }
     }
 }
