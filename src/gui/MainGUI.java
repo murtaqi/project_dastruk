@@ -3,7 +3,6 @@ package gui;
 import model.*;
 import gui.utils.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /**
@@ -234,44 +233,8 @@ public class MainGUI extends JFrame {
     }
 
     private void openRiwayat() {
-        JFrame riwayatFrame = new JFrame("Riwayat Transaksi");
-        riwayatFrame.setSize(600, 400);
-        riwayatFrame.setLocationRelativeTo(this);
-
-        DefaultTableModel model = new DefaultTableModel(
-                new String[]{"ID", "Tanggal", "Tipe", "Kategori", "Nominal"},
-                0
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        // Iterate through transactions using reflection to access private first field
-        try {
-            java.lang.reflect.Field firstField = account.transaction.getClass().getDeclaredField("first");
-            firstField.setAccessible(true);
-            Transaction current = (Transaction) firstField.get(account.transaction);
-            
-            while (current != null) {
-                model.addRow(new Object[]{
-                        current.nomor,
-                        current.date,
-                        current.type,
-                        current.category != null ? current.category : "-",
-                        "Rp " + String.format("%,d", current.nominal)
-                });
-                current = current.next;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading transactions: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        JTable table = new JTable(model);
-        table.setRowHeight(25);
-        riwayatFrame.add(new JScrollPane(table));
-        riwayatFrame.setVisible(true);
+        RiwayatGUI riwayatGUI = new RiwayatGUI(account);
+        riwayatGUI.setVisible(true);
     }
 
     private void showAccountInfo() {
