@@ -21,12 +21,6 @@ public class Account {
         transaction = new LinkedTransaction();
     }
     
-    public Account(int id, String nama, String password) {
-        this.id = id;
-        this.nama = nama;
-        this.password = password;
-    }
-    
     public int getKey() {
         return id;
     }
