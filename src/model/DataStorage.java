@@ -33,7 +33,7 @@ public class DataStorage {
         
         try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
-            while ((line = null) != (line = reader.readLine())) {
+            while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty() || line.startsWith("=")) {
                     continue;
                 }
@@ -47,6 +47,7 @@ public class DataStorage {
                         String password = parts[2];
                         long saldo = Long.parseLong(parts[3]);
                         
+                        // Insert account preserving original id
                         ha.insertWithId(id, nama, password, saldo);
                     }
                 }
@@ -70,7 +71,9 @@ public class DataStorage {
                         
                         Account acc = ha.find(accountId);
                         if (acc != null) {
-                            acc.addTransaksi(trans);
+                            acc.addTransaksiAtTail(trans);
+                        } else {
+                            System.out.println("Warning: account id " + accountId + " tidak ditemukan saat memuat transaksi " + nomor);
                         }
                     }
                 }

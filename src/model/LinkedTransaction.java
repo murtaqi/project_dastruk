@@ -18,6 +18,19 @@ public class LinkedTransaction {
         first = newTrans;
     }
     
+    public void insertAtTail(Transaction newTrans) {
+        newTrans.next = null;
+        if (first == null) {
+            first = newTrans;
+        } else {
+            Transaction current = first;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newTrans;
+        }
+    }
+    
     public Transaction find(String key) {
         Transaction current = first;
         while (current != null) {
@@ -62,5 +75,12 @@ public class LinkedTransaction {
             writer.println("TRANS:" + accountId + "|" + current.nomor + "|" + current.type + "|" + current.nominal + "|" + current.date + "|" + category);
             current = current.next;
         }
+    }
+
+    /**
+     * Mengembalikan node pertama (head) transaksi — digunakan untuk iterasi aman
+     */
+    public Transaction getFirst() {
+        return first;
     }
 }

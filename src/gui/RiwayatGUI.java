@@ -149,7 +149,7 @@ public class RiwayatGUI extends JFrame {
     }
     
     /**
-     * Memuat semua transaksi
+     * Memuat semua transaksi (dari terbaru ke lama - tanpa balik array)
      */
     private void loadAllTransactions() {
         tableModel.setRowCount(0);
@@ -161,6 +161,7 @@ public class RiwayatGUI extends JFrame {
             firstField.setAccessible(true);
             Transaction current = (Transaction) firstField.get(account.transaction);
             
+            // Langsung traversal dari head ke tail (sudah terbaru ke lama)
             while (current != null) {
                 tableModel.addRow(new Object[]{
                         current.nomor,
@@ -186,7 +187,7 @@ public class RiwayatGUI extends JFrame {
     }
     
     /**
-     * Memuat transaksi bulan ini
+     * Memuat transaksi bulan ini (dari terbaru ke lama)
      */
     private void loadTransactionsBulanIni() {
         tableModel.setRowCount(0);
@@ -202,6 +203,7 @@ public class RiwayatGUI extends JFrame {
             firstField.setAccessible(true);
             Transaction current = (Transaction) firstField.get(account.transaction);
             
+            // Langsung traversal dengan filter bulan
             while (current != null) {
                 if (current.date.getMonthValue() == currentMonth && 
                     current.date.getYear() == currentYear) {
@@ -232,7 +234,7 @@ public class RiwayatGUI extends JFrame {
     }
     
     /**
-     * Memuat transaksi bulan lalu
+     * Memuat transaksi bulan lalu (dari terbaru ke lama)
      */
     private void loadTransactionsBulanLalu() {
         tableModel.setRowCount(0);
@@ -248,6 +250,7 @@ public class RiwayatGUI extends JFrame {
             firstField.setAccessible(true);
             Transaction current = (Transaction) firstField.get(account.transaction);
             
+            // Langsung traversal dengan filter bulan
             while (current != null) {
                 if (current.date.getMonthValue() == lastMonthValue && 
                     current.date.getYear() == lastMonthYear) {
