@@ -32,22 +32,22 @@ public class LinkedAccount {
         theLink.next = current;
     }
     
-    public void delete(int key){
-        Account previous = null;
-        Account current = first;
-        while(current != null && key != current.getKey()){
-            previous = current;
-            current = current.next;
-        }
-        if(current == null){
-            return; // key not found
-        }
-        if(previous == null){
-            first = first.next;
-        }else{
-            previous.next = current.next;
-        }
-    }
+    // public void delete(int key){
+    //     Account previous = null;
+    //     Account current = first;
+    //     while(current != null && key != current.getKey()){
+    //         previous = current;
+    //         current = current.next;
+    //     }
+    //     if(current == null){
+    //         return; // key not found
+    //     }
+    //     if(previous == null){
+    //         first = first.next;
+    //     }else{
+    //         previous.next = current.next;
+    //     }
+    // }
     
     public Account find(int key){
         Account current = first;

@@ -23,14 +23,14 @@ public class HashAccount {
         }
     }
     
-    public void displayHash(){
-        System.out.println("Table :");
-        for(int j = 0;j < size;j++){
-            System.out.print(j+"| ");
-            data[j].displayList();
-            System.out.println();
-        }
-    }
+    // public void displayHash(){
+    //     System.out.println("Table :");
+    //     for(int j = 0;j < size;j++){
+    //         System.out.print(j+"| ");
+    //         data[j].displayList();
+    //         System.out.println();
+    //     }
+    // }
     
     public int hashFunc1(int key){
         return key % size;
@@ -45,10 +45,10 @@ public class HashAccount {
         newItem.displayAccount();
     }
     
-    public void delete(int key){
-        int hashVal = hashFunc1((int) key);
-        data[hashVal].delete(key);
-    }
+    // public void delete(int key){
+    //     int hashVal = hashFunc1((int) key);
+    //     data[hashVal].delete(key);
+    // }
     
     public Account find(int key){
         int hashVal = hashFunc1((int) key);
@@ -72,32 +72,5 @@ public class HashAccount {
             data[j].saveToFile(writer);
         }
         writer.println("==============================");
-    }
-    
-    public Account getFirstAccount(){
-        for(int j = 0; j < size; j++){
-            Account acc = data[j].getFirst();
-            if(acc != null){
-                return acc;
-            }
-        }
-        return null;
-    }
-    
-    public Account getNextAccount(Account current){
-        if(current == null) return null;
-        
-        if(current.next != null){
-            return current.next;
-        }
-        
-        int hashVal = hashFunc1(current.getKey());
-        for(int j = hashVal + 1; j < size; j++){
-            Account acc = data[j].getFirst();
-            if(acc != null){
-                return acc;
-            }
-        }
-        return null;
     }
 }

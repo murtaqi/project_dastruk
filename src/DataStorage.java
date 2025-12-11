@@ -3,15 +3,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Class untuk menangani penyimpanan dan pemuatan data akun ke file txt
- */
+
 public class DataStorage {
     private static final String DATA_FILE = "akun_data.txt";
     
-    /**
-     * Menyimpan semua akun ke file txt
-     */
+   
     public static void saveAllAccounts(HashAccount ha) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(DATA_FILE))) {
             ha.saveToFile(writer);
@@ -21,9 +17,7 @@ public class DataStorage {
         }
     }
     
-    /**
-     * Memuat semua akun dari file txt
-     */
+    
     public static void loadAllAccounts(HashAccount ha) {
         File file = new File(DATA_FILE);
         if (!file.exists()) {
@@ -38,7 +32,7 @@ public class DataStorage {
                     continue;
                 }
                 
-                // Parse account line
+                
                 if (line.startsWith("ACCOUNT:")) {
                     String[] parts = line.substring(8).split("\\|");
                     if (parts.length >= 4) {
@@ -50,7 +44,7 @@ public class DataStorage {
                         ha.insertWithId(id, nama, password, saldo);
                     }
                 }
-                // Parse transaction lines
+                
                 else if (line.startsWith("TRANS:")) {
                     String[] parts = line.substring(6).split("\\|");
                     if (parts.length >= 5) {
